@@ -22,7 +22,7 @@ export class ApiRequest {
     method = "GET",
     body: object = {}
   ): ApiResponse<T> {
-    let request = {
+    const request = {
       method: method,
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export class ApiRequest {
         [key: string]: string;
       },
     } as any;
-    let token = AuthHelper.getToken();
+    const token = AuthHelper.getToken();
 
     if (token) {
       request.headers.Authorization = `Bearer ${token}`;
@@ -52,7 +52,6 @@ export class ApiRequest {
       // await new Promise((resolve) => setTimeout(resolve, 1000));
       if (statusCode === 401) {
         AuthHelper.clearSession();
-        document.location.replace("/?message=Session expired");
       }
       return {
         data: data,
